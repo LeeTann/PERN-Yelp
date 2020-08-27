@@ -1,8 +1,11 @@
 import React, { useEffect, useContext } from 'react'
 import RestaurantFinder from '../api/RestaurantFinder'
 import { RestaurantsContext } from '../context/RestaurantsContext'
+import { useParams } from 'react-router-dom'
 
 const RestaurantList = (props) => {
+  const {id} = useParams()
+  console.log(id)
   const {restaurants, setRestaurants} = useContext(RestaurantsContext)
 
   useEffect(() => {
@@ -18,6 +21,19 @@ const RestaurantList = (props) => {
 
     fetchData()
   }, [])
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await RestaurantFinder.delete(`${id}`)
+
+      // Update the UI
+      setRestaurants(restaurants.filter(restaurant => (
+        restaurant.id !== id
+      )))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -40,7 +56,7 @@ const RestaurantList = (props) => {
               <td>{"$".repeat(restaurant.price_range)}</td>
               <td>Rating</td>
               <td><button>Update</button></td>
-              <td><button>Delete</button></td>
+              <td><button onClick={() => handleDelete(restaurant.id)}>Delete</button></td>
             </tr>
           ))}
         </tbody>
