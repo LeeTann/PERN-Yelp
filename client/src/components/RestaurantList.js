@@ -1,11 +1,10 @@
 import React, { useEffect, useContext } from 'react'
 import RestaurantFinder from '../api/RestaurantFinder'
 import { RestaurantsContext } from '../context/RestaurantsContext'
-import { useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const RestaurantList = (props) => {
-  const {id} = useParams()
-  console.log(id)
+  let history = useHistory()
   const {restaurants, setRestaurants} = useContext(RestaurantsContext)
 
   useEffect(() => {
@@ -35,6 +34,10 @@ const RestaurantList = (props) => {
     }
   }
 
+  const handleUpdate = (id) => {
+    history.push(`/restaurants/${id}/update`)
+  }
+
   return (
     <div>
       <table>
@@ -55,7 +58,7 @@ const RestaurantList = (props) => {
               <td>{restaurant.location}</td>
               <td>{"$".repeat(restaurant.price_range)}</td>
               <td>Rating</td>
-              <td><button>Update</button></td>
+              <td><button onClick={() => handleUpdate(restaurant.id)}>Update</button></td>
               <td><button onClick={() => handleDelete(restaurant.id)}>Delete</button></td>
             </tr>
           ))}
