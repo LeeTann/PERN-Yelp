@@ -3,16 +3,22 @@ import { useParams } from 'react-router-dom'
 import { RestaurantsContext } from '../context/RestaurantsContext'
 import RestaurantFinder from '../api/RestaurantFinder'
 import Ratings from '../components/Ratings'
+import Reviews from '../components/Reviews'
+import AddReviews from '../components/AddReviews'
+
 
 const DetailPage = () => {
   const {id} = useParams()
-  const {selectedRestaurant, setSelectedRestaurant} = useContext(RestaurantsContext)
+  const {selectedRestaurant, setSelectedRestaurant, selectedReviews, setSelectedReviews} = useContext(RestaurantsContext)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data: {data: {restaurant}}} = await RestaurantFinder.get(`${id}`)
+        // const response = await RestaurantFinder.get(`${id}`)
+        // console.log(response)
+        const {data: {data: {restaurant, reviews}}} = await RestaurantFinder.get(`${id}`)
         setSelectedRestaurant(restaurant)
+        setSelectedReviews(reviews)
       } catch (error) {
         console.log(error)
       }
@@ -20,12 +26,20 @@ const DetailPage = () => {
     fetchData()
   }, [])
 
+  console.log(selectedRestaurant)
+
   return (
     <div>
-      <h1>{selectedRestaurant && selectedRestaurant.name}</h1>
-      <div>
-        <Ratings rating={2.5} />
-      </div>
+      {selectedRestaurant && (
+        <>
+          <h1>{selectedRestaurant.name}</h1>
+          <div>
+            <Reviews reviews={selectedReviews} />
+          </div>
+          <AddReviews />
+        </>
+      )}
+
     </div>
   )
 }
