@@ -29,3 +29,13 @@ DROP TABLE reviews;
 INSERT INTO reviews (restaurant_id, name, review, rating) VALUES ('11', 'carl', 'restaurant was good', 5);
 
 SELECT * FROM reviews WHERE restaurant_id = 11;
+
+SELECT TRUNC(AVG(rating), 2) AS avg_rating FROM reviews WHERE restaurant_id = 13;
+
+SELECT COUNT(rating) AS avg_rating FROM reviews WHERE restaurant_id = 13;
+
+SELECT location, COUNT(location) FROM restaurants GROUP BY location;
+
+SELECT restaurant_id, AVG(rating), COUNT(rating) FROM reviews GROUP BY restaurant_id;
+
+SELECT * FROM restaurants INNER JOIN reviews ON restaurants.id = reviews.restaurant_id;

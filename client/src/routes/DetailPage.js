@@ -34,6 +34,9 @@ const DetailPage = () => {
         <>
           <h1>{selectedRestaurant.name}</h1>
           <div>
+            <Ratings rating={selectedRestaurant.restaurant} />
+          </div>
+          <div>
             <Reviews reviews={selectedReviews} />
           </div>
           <AddReviews />
