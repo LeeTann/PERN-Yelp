@@ -10,7 +10,7 @@ const Reviews = ({reviews}) => {
           
             <div key={review.id}>
               <div>{review.name}</div>
-              <div>{review.rating}</div>
+              <span><Ratings rating={review.rating} /></span>
               <p>{review.review}</p>
             </div>
           

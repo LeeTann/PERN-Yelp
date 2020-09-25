@@ -26,15 +26,14 @@ const DetailPage = () => {
     fetchData()
   }, [])
 
-  console.log(selectedRestaurant)
-
   return (
     <div>
       {selectedRestaurant && (
         <>
           <h1>{selectedRestaurant.name}</h1>
           <div>
-            <Ratings rating={selectedRestaurant.restaurant} />
+            <Ratings rating={selectedRestaurant.average_rating} />
+            <span>{selectedRestaurant.count ? `(${selectedRestaurant.count})` : "(0)"}</span>
           </div>
           <div>
             <Reviews reviews={selectedReviews} />
